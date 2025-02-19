@@ -1,0 +1,29 @@
+---
+- name: Ensure NUT Client is installed.
+  package:
+    name: nut-client
+    state: present
+
+- name: Change UPSMON configuration.
+  lineinfile:
+    path: /etc/nut/upsmon.conf
+    regexp: "^MONITOR.*"
+    line: "MONITOR {{ nut_client_ups }}@{{ nut_client_server }} 1 {{ nut_client_username }} {{ nut_client_password }} slave"
+    state: present
+    mode: 0640
+  notify: restart nut-client
+
+- name: Change NUT configuration.
+  lineinfile:
+    path: /etc/nut/nut.conf
+    regexp: '^MODE.+'
+    line: "MODE=netclient"
+    state: present
+    mode: 0640
+
+- name: Ensure NUT Client is running (if configured).
+  service:
+    name: nut-client
+    state: "{{ nut_client_state }}"
+    enabled: "{{ nut_client_enabled }}"
+  when: not ansible_check_mode
