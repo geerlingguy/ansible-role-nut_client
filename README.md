@@ -17,6 +17,7 @@ nut_client_ups: nut-server
 nut_client_server: 127.0.0.1
 nut_client_username: observer
 nut_client_password: password_here
+nut_client_type: secondary
 ```
 
 Controls the `nut-client` primary server access options.
