@@ -1,4 +1,7 @@
 ---
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
 - name: Ensure NUT Client is installed.
   package:
     name: nut-client
@@ -6,7 +9,7 @@
 
 - name: Change UPSMON configuration.
   lineinfile:
-    path: /etc/nut/upsmon.conf
+    path: "{{ nut_config_path }}/upsmon.conf"
     regexp: "^MONITOR.*"
     line: "MONITOR {{ nut_client_ups }}@{{ nut_client_server }} 1 {{ nut_client_username }} {{ nut_client_password }} {{ nut_client_type | default('secondary') }}"
     state: present
@@ -15,7 +18,7 @@
 
 - name: Change NUT configuration.
   lineinfile:
-    path: /etc/nut/nut.conf
+    path: "{{ nut_config_path }}/nut.conf"
     regexp: '^MODE.+'
     line: "MODE=netclient"
     state: present
@@ -23,7 +26,7 @@
 
 - name: Ensure NUT Client is running (if configured).
   service:
-    name: nut-client
+    name: "{{ nut_client_service }}"
     state: "{{ nut_client_state }}"
     enabled: "{{ nut_client_enabled }}"
   when: not ansible_check_mode

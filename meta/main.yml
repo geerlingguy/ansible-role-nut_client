@@ -15,6 +15,9 @@ galaxy_info:
     - name: Debian
       versions:
         - all
+    - name: Fedora
+      version:
+        - all
   galaxy_tags:
     - networking
     - power

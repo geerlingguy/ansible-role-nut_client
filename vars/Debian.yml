@@ -1,0 +1,3 @@
+---
+nut_config_path: /etc/nut
+nut_client_service: nut-client
