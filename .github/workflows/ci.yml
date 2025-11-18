@@ -43,6 +43,8 @@ jobs:
         distro:
           - ubuntu2404
           - debian12
+          - rockylinux10
+          - fedora43
 
     steps:
       - name: Check out the codebase.

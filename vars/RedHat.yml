@@ -1,0 +1,3 @@
+---
+nut_config_path: /etc/ups
+nut_client_service: nut-monitor

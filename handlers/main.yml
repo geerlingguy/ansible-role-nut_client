@@ -1,6 +1,6 @@
 ---
 - name: restart nut-client
   service:
-    name: nut-client
+    name: "{{ nut_client_service }}"
     state: restarted
   when: not ansible_check_mode
